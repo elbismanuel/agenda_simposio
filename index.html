@@ -1,82 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>I Simposio (Fortalecimiento de las capacidades de la Investigación Criminal)</title>
-
-	<!-- Estilos de PDF.js -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf_viewer.min.css">
-	<script src="https://cdn.tailwindcss.com"></script>
-
-	<style>
-		#viewerContainer {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			overflow: auto;
-			background-color: #404040;
-		}
-
-		#viewer {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-		}
-
-		.pdfViewer .page {
-			margin: 10px auto;
-			border: none;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>I Simposio (Fortalecimiento de las capacidades de la Investigación Criminal)</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
 </head>
-
-<body class="m-0 p-0 h-screen">
-	<div id="viewerContainer">
-		<div id="viewer" class="pdfViewer"></div>
-	</div>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-	<script>
-		pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-
-		const CMAP_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/cmaps/';
-		const CMAP_PACKED = true;
-
-		const loadingTask = pdfjsLib.getDocument({
-			url: 'doc.pdf',
-			cMapUrl: CMAP_URL,
-			cMapPacked: CMAP_PACKED,
-		});
-
-		loadingTask.promise.then(function (pdf) {
-			const container = document.getElementById('viewer');
-			const scale = 1.5;
-
-			// Cargar todas las páginas
-			for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-				pdf.getPage(pageNum).then(function (page) {
-					const viewport = page.getViewport({ scale: scale });
-
-					const canvas = document.createElement('canvas');
-					const context = canvas.getContext('2d');
-					canvas.height = viewport.height;
-					canvas.width = viewport.width;
-
-					const wrapper = document.createElement('div');
-					wrapper.className = 'page';
-					wrapper.appendChild(canvas);
-					container.appendChild(wrapper);
-
-					page.render({
-						canvasContext: context,
-						viewport: viewport
-					});
-				});
-			}
-		});
-	</script>
+<body>
+    <iframe 
+        src="https://mozilla.github.io/pdf.js/web/viewer.html?file=doc.pdf#zoom=page-width"
+        frameborder="0"
+        allowfullscreen>
+    </iframe>
 </body>
-
 </html>
